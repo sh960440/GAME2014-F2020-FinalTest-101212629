@@ -8,7 +8,7 @@ public class MovingPlatformController : MonoBehaviour
     public Transform start;
     public Transform end;
     public bool isActive;
-    public float platformTimer;
+    public float platformTimer; 
     public float threshold;
 
     public PlayerBehaviour player;
