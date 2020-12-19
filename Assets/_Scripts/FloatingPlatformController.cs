@@ -6,13 +6,18 @@ public class FloatingPlatformController : MonoBehaviour
 {
     public bool isActive;
     public float platformTimer; 
-    public float threshold;
-    public PlayerBehaviour player;
+    public float floatingDistance;
+    public float floatSpeed = 2.0f;
+    //public float threshold;
+    //public PlayerBehaviour player;
+    private float startYPosition;
+    private int movingDirection = 1;
     // Start is called before the first frame update
     void Start()
     {
-        player = FindObjectOfType<PlayerBehaviour>();
+        //player = FindObjectOfType<PlayerBehaviour>();
 
+        startYPosition = transform.position.y;
         platformTimer = 0.1f;
         platformTimer = 0;
         isActive = false;
@@ -24,21 +29,39 @@ public class FloatingPlatformController : MonoBehaviour
         if (isActive)
         {
             platformTimer += Time.deltaTime;
-            _Shrink();
+            Shrink();
+        }
+        else
+        {
+            Float();
         }
     }
 
-    private void _Shrink()
+    private void Shrink()
     {
-        if (transform.localScale.magnitude >= 0.01f)
+        if (transform.localScale.magnitude >= 0.1f)
         {
             var currentScale = transform.localScale;
-            transform.localScale = currentScale * 0.999f;
+            transform.localScale = currentScale * 0.995f;
         }
         else
         {
             transform.localScale = Vector3.zero;
         }
+    }
+
+    private void Float()
+    {
+        if (transform.position.y >= startYPosition + floatingDistance)
+        {
+            movingDirection = -1;
+        }
+        else if (transform.position.y <= startYPosition - floatingDistance)
+        {
+            movingDirection = 1;
+        }
+
+        transform.position = new Vector3(transform.position.x, transform.position.y + Time.deltaTime * movingDirection * floatSpeed, transform.position.z);
     }
 
     public void Reset()
