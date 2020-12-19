@@ -8,13 +8,15 @@ public class FloatingPlatformController : MonoBehaviour
     public float floatingDistance;
     public float floatSpeed = 2.0f;
     public float minimumSize = 0.05f;
-    public float shrinkingFactor = 0.996f;
-    public float expandingFactor = 1.004f;
+    private float shrinkingFactor = 0.996f;
+    private float expandingFactor = 1.006f;
+    public AudioSource soundEffect;
     private float startYPosition;
     private int movingDirection = 1;
 
     void Start()
     {
+        soundEffect = GetComponent<AudioSource>();
         startYPosition = transform.position.y;
         isActive = false;
     }

@@ -286,6 +286,7 @@ public class PlayerBehaviour : MonoBehaviour
         if (other.gameObject.CompareTag("Floating Platform"))
         {
             other.gameObject.GetComponent<FloatingPlatformController>().isActive = true;
+            other.gameObject.GetComponent<FloatingPlatformController>().soundEffect.Play();
         }
     }
 
