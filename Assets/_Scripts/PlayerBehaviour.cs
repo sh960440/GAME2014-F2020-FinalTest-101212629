@@ -1,4 +1,36 @@
-﻿using System.Collections;
+﻿/****************************************************************************************************
+    Source File Name: PlayerBehaviour.cs
+    Student Name: Shun min Hsieh
+    StudentID: 101212629
+    Date Last Modified: 2020/12/19
+    Program Description: A class contols the player character.
+    Revision History: 
+        - 2020/12/19
+            - Modified OnCollisionEnter2D function
+            - Modified OnCollisionExit2D function
+    Class: 
+        - PlayerBehaviour
+    Methods: 
+        - Start()
+        - FixedUpdate()
+        - _LookInFront()
+        - _isGroundBelow()
+        - OnDrawGizmos()
+        - isOnSlope()
+        - _Move()
+        - OnTriggerEnter2D(Collider2D other)
+        - OnCollisionEnter2D(Collision2D other)
+        - OnCollisionExit2D(Collision2D other)
+        - OnCollisionStay2D(Collision2D other)
+        - LoseLife()
+        - TakeDamage(int damage)
+        - HealDamage(int damage)
+        - CreateDustTrail()
+        - PlayRandomHitSound()
+        - ShakeCamera()
+****************************************************************************************************/
+
+using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
 using Unity.Mathematics;

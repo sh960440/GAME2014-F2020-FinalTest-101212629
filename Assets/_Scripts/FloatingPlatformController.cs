@@ -1,4 +1,28 @@
-﻿using System.Collections;
+﻿/****************************************************************************************************
+    Source File Name: FloatingPlatformController.cs
+    Student Name: Shun min Hsieh
+    StudentID: 101212629
+    Date Last Modified: 2020/12/19
+    Program Description: A class contols the behavior of a floating platform. It includes shrinking, expanding and floating.
+    Revision History: 
+        - 2020/12/19
+            - Added Start function
+            - Added Update function
+            - Added Shrink function
+            - Added Expand function
+            - Added Float function
+            - Added ResetFromZero function
+    Class: 
+        - FloatingPlatformController
+    Methods: 
+        - Start()
+        - Update()
+        - Shrink()
+        - Expand()
+        - Float()
+        - ResetFromZero()
+****************************************************************************************************/
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,25 +45,25 @@ public class FloatingPlatformController : MonoBehaviour
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
-        startYPosition = transform.position.y;
+        startYPosition = transform.position.y; // Store initial Y position
         isActive = false;
     }
 
     void Update()
     {
-        if (isActive)
+        if (isActive) // If the player steps on this platform
         {
             Shrink();
 
-            if (transform.localScale.x < minimumSize)
+            if (transform.localScale.x < minimumSize) // If the scale is set to 0
             {
                 StartCoroutine("ResetFromZero");
             }
         }
-        else
+        else // If the player is not on this platform
         {
             Float();
-            if (transform.localScale.x <= 1.0f)
+            if (transform.localScale.x <= 1.0f) // If it's still smaller than the original size
             {
                 Expand();
             }
@@ -55,7 +79,7 @@ public class FloatingPlatformController : MonoBehaviour
         }
         else
         {
-            transform.localScale = Vector3.zero;
+            transform.localScale = Vector3.zero; // If it's already too small, directly set it to 0 instead of shrinking
         }
     }
 
@@ -70,6 +94,7 @@ public class FloatingPlatformController : MonoBehaviour
 
     private void Float()
     {
+        // Periodically move up and down between two Y positions
         if (transform.position.y >= startYPosition + floatingDistance)
         {
             movingDirection = -1;
