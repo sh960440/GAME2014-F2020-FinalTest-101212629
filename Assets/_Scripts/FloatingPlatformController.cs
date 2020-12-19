@@ -5,48 +5,60 @@ using UnityEngine;
 public class FloatingPlatformController : MonoBehaviour
 {
     public bool isActive;
-    public float platformTimer; 
     public float floatingDistance;
     public float floatSpeed = 2.0f;
-    //public float threshold;
-    //public PlayerBehaviour player;
+    public float minimumSize = 0.05f;
+    public float shrinkingFactor = 0.996f;
+    public float expandingFactor = 1.004f;
     private float startYPosition;
     private int movingDirection = 1;
-    // Start is called before the first frame update
+
     void Start()
     {
-        //player = FindObjectOfType<PlayerBehaviour>();
-
         startYPosition = transform.position.y;
-        platformTimer = 0.1f;
-        platformTimer = 0;
         isActive = false;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (isActive)
         {
-            platformTimer += Time.deltaTime;
             Shrink();
+
+            if (transform.localScale.x < minimumSize)
+            {
+                StartCoroutine("Reset");
+            }
         }
         else
         {
             Float();
+            if (transform.localScale.x <= 1.0f)
+            {
+                Expand();
+            }
         }
     }
 
     private void Shrink()
     {
-        if (transform.localScale.magnitude >= 0.1f)
+        if (transform.localScale.x >= minimumSize)
         {
             var currentScale = transform.localScale;
-            transform.localScale = currentScale * 0.995f;
+            transform.localScale = currentScale * shrinkingFactor;
         }
         else
         {
             transform.localScale = Vector3.zero;
+        }
+    }
+
+    private void Expand()
+    {
+        if (transform.localScale.x <= 1.0f)
+        {
+            var currentScale = transform.localScale;
+            transform.localScale = currentScale * expandingFactor;
         }
     }
 
@@ -64,9 +76,10 @@ public class FloatingPlatformController : MonoBehaviour
         transform.position = new Vector3(transform.position.x, transform.position.y + Time.deltaTime * movingDirection * floatSpeed, transform.position.z);
     }
 
-    public void Reset()
+    IEnumerator Reset()
     {
-        transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
-        platformTimer = 0;
+        yield return new WaitForSeconds(1.0f);
+        transform.localScale = new Vector3(minimumSize, minimumSize, minimumSize);
+        isActive = false;
     }
 }
