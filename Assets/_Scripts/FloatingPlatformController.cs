@@ -5,18 +5,22 @@ using UnityEngine;
 public class FloatingPlatformController : MonoBehaviour
 {
     public bool isActive;
-    public float floatingDistance;
-    public float floatSpeed = 2.0f;
-    public float minimumSize = 0.05f;
+    [SerializeField] 
+    float floatingDistance;
+    [SerializeField]
+    float floatSpeed = 2.0f;
+    [SerializeField]
+    float minimumSize = 0.05f;
+    public AudioSource audioSource;
+    public AudioClip[] sounds;
     private float shrinkingFactor = 0.996f;
     private float expandingFactor = 1.006f;
-    public AudioSource soundEffect;
     private float startYPosition;
     private int movingDirection = 1;
 
     void Start()
     {
-        soundEffect = GetComponent<AudioSource>();
+        audioSource = GetComponent<AudioSource>();
         startYPosition = transform.position.y;
         isActive = false;
     }
@@ -29,7 +33,7 @@ public class FloatingPlatformController : MonoBehaviour
 
             if (transform.localScale.x < minimumSize)
             {
-                StartCoroutine("Reset");
+                StartCoroutine("ResetFromZero");
             }
         }
         else
@@ -78,7 +82,7 @@ public class FloatingPlatformController : MonoBehaviour
         transform.position = new Vector3(transform.position.x, transform.position.y + Time.deltaTime * movingDirection * floatSpeed, transform.position.z);
     }
 
-    IEnumerator Reset()
+    IEnumerator ResetFromZero()
     {
         yield return new WaitForSeconds(1.0f);
         transform.localScale = new Vector3(minimumSize, minimumSize, minimumSize);

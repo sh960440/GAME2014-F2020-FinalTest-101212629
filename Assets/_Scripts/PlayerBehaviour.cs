@@ -286,7 +286,8 @@ public class PlayerBehaviour : MonoBehaviour
         if (other.gameObject.CompareTag("Floating Platform"))
         {
             other.gameObject.GetComponent<FloatingPlatformController>().isActive = true;
-            other.gameObject.GetComponent<FloatingPlatformController>().soundEffect.Play();
+            other.gameObject.GetComponent<FloatingPlatformController>().audioSource.clip = other.gameObject.GetComponent<FloatingPlatformController>().sounds[0];
+            other.gameObject.GetComponent<FloatingPlatformController>().audioSource.Play();
         }
     }
 
@@ -300,6 +301,8 @@ public class PlayerBehaviour : MonoBehaviour
         if (other.gameObject.CompareTag("Floating Platform"))
         {
             other.gameObject.GetComponent<FloatingPlatformController>().isActive = false;
+            other.gameObject.GetComponent<FloatingPlatformController>().audioSource.clip = other.gameObject.GetComponent<FloatingPlatformController>().sounds[1];
+            other.gameObject.GetComponent<FloatingPlatformController>().audioSource.Play();
         }
     }
 
